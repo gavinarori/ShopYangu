@@ -36,7 +36,7 @@ export async function deleteShop(id: string) {
   })
 }
 
-export async function getShops(page: number = 1, pageSize: number = 10) {
+export async function getShops(page: number = 1, pageSize: number = 10,) {
   const skip = (page - 1) * pageSize
   const [shops, total] = await Promise.all([
     prisma.shop.findMany({
