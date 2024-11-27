@@ -6,10 +6,8 @@ import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -94,7 +92,7 @@ export default function Home() {
               <CardContent>
                 <p className="mb-4">Manage your shops and create new ones.</p>
                 <Button asChild>
-                  <Link href="/shops">
+                  <Link href="/shop">
                     View Shops
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -121,7 +119,7 @@ export default function Home() {
               </CardHeader>
               <CardContent className="flex flex-col gap-2">
                 <Button asChild variant="outline">
-                  <Link href="/shops/create">Create New Shop</Link>
+                  <Link href="/shop/create">Create New Shop</Link>
                 </Button>
                 <Button asChild variant="outline">
                   <Link href="/products/create">Add New Product</Link>
