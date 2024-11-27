@@ -37,10 +37,8 @@ export default function CreateProduct() {
     const price = parseFloat(formData.get('price') as string)
     const stockLevel = parseInt(formData.get('stockLevel') as string, 10)
     const description = formData.get('description') as string
-    const imageFile = formData.get('image') as File
 
     try {
-      // For this example, we'll use a placeholder image URL
       const imageUrl = `/placeholder.svg?height=200&width=200`
 
       const result = await createProduct(shopId, name, price, stockLevel, description, imageUrl)

@@ -1,3 +1,5 @@
+'use server'
+
 import { prisma } from '@/lib/db'
 
 export async function createShop(name: string, description: string, logo: string) {

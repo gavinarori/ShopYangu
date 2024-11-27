@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "@/hooks/use-toast"
 import { createShop } from '@/app/actions/shopActions'
-import { saveFile } from '@/lib/fileUpload'
+import { uploadFile } from '@/app/actions/uploadFile'
 
 export default function CreateShop() {
   const [isLoading, setIsLoading] = useState(false)
@@ -25,7 +25,7 @@ export default function CreateShop() {
     const logoFile = formData.get('logo') as File
 
     try {
-      const logoUrl = await saveFile(logoFile)
+      const logoUrl = await uploadFile(logoFile)
       const result = await createShop(name, description, logoUrl)
       setIsLoading(false)
       if (result) {
@@ -33,7 +33,7 @@ export default function CreateShop() {
           title: "Success",
           description: "Shop created successfully",
         })
-        router.push('/shops')
+        router.push('/')
       } else {
         throw new Error('Failed to create shop')
       }
