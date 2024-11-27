@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "@/hooks/use-toast"
+import { createShop } from '@/app/actions/shopActions'
+import { saveFile } from '@/lib/fileUpload'
 
 export default function CreateShop() {
   const [isLoading, setIsLoading] = useState(false)
@@ -18,22 +20,31 @@ export default function CreateShop() {
     setIsLoading(true)
 
     const formData = new FormData(event.currentTarget)
-    const result = await createShop(formData)
+    const name = formData.get('name') as string
+    const description = formData.get('description') as string
+    const logoFile = formData.get('logo') as File
 
-    setIsLoading(false)
-
-    if (result.success) {
-      toast({
-        title: "Success",
-        description: result.message,
-      })
-      router.push('/shops')
-    } else {
+    try {
+      const logoUrl = await saveFile(logoFile)
+      const result = await createShop(name, description, logoUrl)
+      setIsLoading(false)
+      if (result) {
+        toast({
+          title: "Success",
+          description: "Shop created successfully",
+        })
+        router.push('/shops')
+      } else {
+        throw new Error('Failed to create shop')
+      }
+    } catch (error) {
+      setIsLoading(false)
       toast({
         title: "Error",
         description: "Failed to create shop. Please try again.",
         variant: "destructive",
       })
+      console.error('Error creating shop:', error)
     }
   }
 
