@@ -58,7 +58,7 @@ export default function AllProducts() {
   }
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
+    <Card className="w-full max-w-4xl mx-auto mt-20">
       <CardHeader>
         <CardTitle>All Products</CardTitle>
       </CardHeader>

@@ -57,7 +57,7 @@ export default function AllShops() {
   }
 
   return (
-    <Card className="w-full max-w-4xl mx-auto mt-16">
+    <Card className="w-full max-w-4xl mx-auto mt-20">
       <CardHeader>
         <CardTitle>All Shops</CardTitle>
       </CardHeader>
