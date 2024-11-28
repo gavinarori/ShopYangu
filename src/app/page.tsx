@@ -41,19 +41,17 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const shopsResult = await getShops(1, 1000)  // Fetch all shops
+      const shopsResult = await getShops(1, 1000)  
       setShopCount(shopsResult.total)
 
-      const productsResult = await getProducts(1, 1000)  // Fetch all products
+      const productsResult = await getProducts(1, 1000)  
       setProductCount(productsResult.total)
 
-      // Calculate stock status
       const inStock = productsResult.products.filter(p => p.stockLevel > 5).length
       const outOfStock = productsResult.products.filter(p => p.stockLevel === 0).length
       const lowStock = productsResult.products.filter(p => p.stockLevel > 0 && p.stockLevel <= 5).length
       setStockStatus({ inStock, outOfStock, lowStock })
 
-      // Calculate top shops by stock level
       const shopStocks = shopsResult.shops.map(shop => ({
         name: shop.name,
         stockCount: shop.products.reduce((total, product) => total + product.stockLevel, 0)
