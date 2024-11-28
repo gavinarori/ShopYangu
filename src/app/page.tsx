@@ -20,31 +20,48 @@ import { Button } from "@/components/ui/button"
 import { getShops } from '@/app/actions/shopActions'
 import { getProducts } from '@/app/actions/productActions'
 import { ShoppingBag, Package, ArrowRight } from 'lucide-react'
-import { useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react'
 import { useRouter } from "next/navigation"
+import { StockStatusDistribution } from '@/components/stock-status-distribution'
+import { TopShopsByStock } from '@/components/top-shops-by-stock'
 
 export default function Home() {
   const [shopCount, setShopCount] = useState(0)
   const [productCount, setProductCount] = useState(0)
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  useEffect(() =>{
-    if (!session) {
-      router.push("/login")
-      }
-  },[session , router]);
-  
+  const [stockStatus, setStockStatus] = useState({ inStock: 0, outOfStock: 0, lowStock: 0 })
+  const [topShops, setTopShops] = useState([])
+  const { data: session, status } = useSession()
+  const router = useRouter()
 
   useEffect(() => {
-    async function fetchCounts() {
-      const shopsResult = await getShops(1, 1)
+    if (!session) {
+      router.push("/login")
+    }
+  }, [session, router])
+
+  useEffect(() => {
+    async function fetchData() {
+      const shopsResult = await getShops(1, 1000)  // Fetch all shops
       setShopCount(shopsResult.total)
 
-      const productsResult = await getProducts(1, 1)
+      const productsResult = await getProducts(1, 1000)  // Fetch all products
       setProductCount(productsResult.total)
+
+      // Calculate stock status
+      const inStock = productsResult.products.filter(p => p.stockLevel > 5).length
+      const outOfStock = productsResult.products.filter(p => p.stockLevel === 0).length
+      const lowStock = productsResult.products.filter(p => p.stockLevel > 0 && p.stockLevel <= 5).length
+      setStockStatus({ inStock, outOfStock, lowStock })
+
+      // Calculate top shops by stock level
+      const shopStocks = shopsResult.shops.map(shop => ({
+        name: shop.name,
+        stockCount: shop.products.reduce((total, product) => total + product.stockLevel, 0)
+      }))
+      const sortedShops:any = shopStocks.sort((a, b) => b.stockCount - a.stockCount).slice(0, 5)
+      setTopShops(sortedShops)
     }
-    fetchCounts()
+    fetchData()
   }, [])
 
   return (
@@ -94,6 +111,10 @@ export default function Home() {
                 </p>
               </CardContent>
             </Card>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <StockStatusDistribution data={stockStatus} />
+            <TopShopsByStock shops={topShops} />
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <Card>
