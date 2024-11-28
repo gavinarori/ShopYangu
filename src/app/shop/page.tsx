@@ -57,14 +57,14 @@ export default function AllShops() {
   }
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
+    <Card className="w-full max-w-4xl mx-auto mt-16">
       <CardHeader>
         <CardTitle>All Shops</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex justify-between mb-4">
           <Button asChild>
-            <Link href="/shops/create">Create New Shop</Link>
+            <Link href="/shop/create">Create New Shop</Link>
           </Button>
         </div>
         <Table>
