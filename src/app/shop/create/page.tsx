@@ -49,7 +49,7 @@ export default function CreateShop() {
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-2xl mx-auto mt-20">
       <CardHeader>
         <CardTitle>Create New Shop</CardTitle>
       </CardHeader>

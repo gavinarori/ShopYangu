@@ -20,10 +20,21 @@ import { Button } from "@/components/ui/button"
 import { getShops } from '@/app/actions/shopActions'
 import { getProducts } from '@/app/actions/productActions'
 import { ShoppingBag, Package, ArrowRight } from 'lucide-react'
+import { useSession } from 'next-auth/react';
+import { useRouter } from "next/navigation"
 
 export default function Home() {
   const [shopCount, setShopCount] = useState(0)
   const [productCount, setProductCount] = useState(0)
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() =>{
+    if (!session) {
+      router.push("/login")
+      }
+  },[session , router]);
+  
 
   useEffect(() => {
     async function fetchCounts() {

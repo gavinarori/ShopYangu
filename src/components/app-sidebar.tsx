@@ -56,21 +56,6 @@ const data = {
         },
       ],
     },
-    {
-      title: "Settings",
-      url: "/settings",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "/settings/general",
-        },
-        {
-          title: "Profile",
-          url: "/settings/profile",
-        },
-      ],
-    },
   ],
 }
 
@@ -80,14 +65,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <div className="flex items-center space-x-2 px-4 py-2">
           <User className="h-6 w-6" />
-          <span className="text-lg font-bold">Admin Panel</span>
+          <span className="text-lg font-bold">Shop yangu</span>
         </div>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
